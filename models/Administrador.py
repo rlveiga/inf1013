@@ -5,10 +5,19 @@ from termcolor import colored
 import session
 
 class Administrador:
-    def __init__(self, nome, loja, role):
+    def __init__(self, nome, loja):
         self.nome = nome
         self.loja = loja
-        self.role = role
+        # self.role = role
+
+    def helper(self):
+        print("Comandos disponíveis para administradores:")
+        print("    loja - exibe os filmes da sua loja")
+        print("    add - adiciona um novo filme")
+        print("    edit <nome_filme> - editar filme")
+        print("    rm <nome_filme> - remover filme")
+        print("    h - exibir ajuda")
+        print("    q - sair")
 
     def exibir_loja(self):
         print("Filmes da loja %s (%s)" % (self.loja.nome, self.loja.local))
@@ -17,13 +26,6 @@ class Administrador:
             e.exibir_info()
 
     def adicionar_filme(self):
-        # user_list = user_helper.read()
-
-        # for u in user_list:
-        #     if(u.nome == self.nome):
-        #         user_list.remove(u)
-
-        # movie_list = movie_helper.read()
         nome = input("Digite o nome do filme: ")
         ano = input("Digite o ano do filme: ")
         genero = input("Digite o gênero do filme: ")
@@ -33,56 +35,6 @@ class Administrador:
 
         movie_helper.save(novo_filme)
         user_helper.update(self)
-
-        # movie_list.append(novo_filme)
-        # movie_helper.write(movie_list)
-
-        # user_list.append(self)
-        # user_helper.write(user_list)
-
-    # def editar_filme(self, nome_filme):
-    #     user_list = user_helper.read()
-
-    #     for u in user_list:
-    #         if(u.nome == self.nome):
-    #             user_list.remove(u)
-
-    #     movie_list = movie_helper.read()
-    #     filme = None
-
-    #     for e in movie_list:
-    #         if(e.nome == nome_filme and e.loja.nome == self.loja.nome):
-    #             filme = e
-
-    #     if(filme is None):
-    #         print(colored("Filme %s não encontrado na sua loja" % nome_filme, "red"))
-    #         return
-
-    #     nome_novo = input("Nome: (%s) " % filme.nome)
-    #     ano_novo = input("Ano: (%s) " % filme.ano)
-    #     genero_novo = input("Genero: (%s) " % filme.genero)
-
-    #     if(nome_novo == ""):
-    #         nome_novo = filme.nome
-
-    #     if(ano_novo == ""):
-    #         ano_novo = filme.ano
-
-    #     if(genero_novo == ""):
-    #         genero_novo = filme.genero
-
-    #     filme_edit = Filme(nome_novo, ano_novo, genero_novo, self.loja)
-
-    #     for i in range(len(self.loja.filmes)):
-    #         if(self.loja.filmes[i].nome == nome_filme):
-    #             self.loja.filmes[i] = filme_edit
-            
-    #     movie_list.remove(filme)
-    #     movie_list.append(filme_edit)
-    #     movie_helper.write(movie_list)
-
-    #     user_list.append(self)
-    #     user_helper.write(user_list)
     
     def remover_filme(self, nome_filme):
         filme = movie_helper.get_movie(nome_filme)
@@ -107,41 +59,6 @@ class Administrador:
                         del self.loja.filmes[i]
 
                 user_helper.update(self)
-        # # user_list = user_helper.read()
-
-        # # for u in user_list:
-        # #     if(u.nome == self.nome):
-        # #         user_list.remove(u)
-                
-        # # movie_list = movie_helper.read()
-        # # filme = None
-
-        # for e in movie_list:
-        #     if(e.nome == nome_filme and e.loja.nome == self.loja.nome):
-        #         filme = e
-
-        # if(filme is None):
-        #     print(colored("Filme %s não encontrado na sua loja" % nome_filme, "red"))
-        #     return
-
-        # movie_list.remove(filme)
-
-        # for e in self.loja.filmes:
-        #     if(e.nome == nome_filme):
-        #         self.loja.filmes.remove(e)
-
-        # user_list.append(self)
-        # user_helper.write(user_list)
-        # movie_helper.write(movie_list)
-
-    def helper(self):
-        print("Comandos disponíveis para administradores:")
-        print("    loja - exibe os filmes da sua loja")
-        print("    add - adiciona um novo filme")
-        print("    edit <nome_filme> - editar filme")
-        print("    rm <nome_filme> - remover filme")
-        print("    h - exibir ajuda")
-        print("    q - sair")
 
     def read_command(self):
         user_input = input("Digite um comando: ")

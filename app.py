@@ -30,10 +30,10 @@ def login():
                 store_name = input(colored("Digite um nome para sua nova loja: ", "white"))
                 store_location = input(colored("Digite o local da sua nova loja: ", "white"))
                 new_store = Loja(store_name, store_location)
-                new_user = Administrador(user_input, new_store, user_role)
+                new_user = Administrador(user_input, new_store)
 
             elif(user_role == "cliente"):
-                new_user = Cliente(user_input, user_role)
+                new_user = Cliente(user_input)
 
             else:
                 login()

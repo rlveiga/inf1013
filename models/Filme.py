@@ -1,6 +1,8 @@
 from termcolor import colored
 from helpers import movie_helper, user_helper
+from models.Aluguel import Aluguel
 import session
+from datetime import datetime
 
 class Filme:
     def __init__(self, nome, ano, genero, loja):
@@ -16,9 +18,8 @@ class Filme:
 
         if self.alugado:
             color = "red"
-        
-        print("------------")
-        print(colored("%s\n%s\n%s" % (self.nome, self.ano, self.genero), color))
+    
+        print(colored("\n%s\n%s\n%s\n" % (self.nome, self.ano, self.genero), color))
 
     def editar(self):
         previous_name = self.nome
@@ -59,7 +60,9 @@ class Filme:
                 self.alugado = True
                 self.alugado_por = session.client.nome
 
-                session.client.alugueis.append(self)
+                novo_aluguel = Aluguel(self, session.client.nome, 10, 7)
+
+                session.client.alugueis.append(novo_aluguel)
 
                 movie_helper.update(self.nome, self)
                 user_helper.update(session.client)
@@ -75,9 +78,10 @@ class Filme:
             self.alugado = False
             self.alugado_por = None
 
-            for i, m in enumerate(session.client.alugueis):
-                if(m.nome == self.nome):
-                    del session.client.alugueis[i]
+            for i, a in enumerate(session.client.alugueis):
+                if(a.filme.nome == self.nome and a.status == 'ativo'):
+                    session.client.alugueis[i].status = 'devolvido'
+                    session.client.alugueis[i].devolvido_em = datetime.now()
                     break
 
             movie_helper.update(self.nome, self)
